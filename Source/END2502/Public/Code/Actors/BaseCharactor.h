@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include <Both/CharacterAnimation.h>
-#include "Utility/HealthComponent.h"
+
 #include "BaseRifle.h"
 #include "BaseCharactor.generated.h"
 
