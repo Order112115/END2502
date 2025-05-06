@@ -4,9 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Code/Actors/BaseCharactor.h"
-#include "Code/Actors/BaseRifle.h"
 #include "Both/CharacterAnimation.h"
-#include <Both/PlayerHUD.h>
 #include "BasePlayer.generated.h"
 
 
@@ -27,7 +25,7 @@ public:
 	TSubclassOf<AActor> WeaponClass;
 
 	UPROPERTY()
-	UPlayerHUD* PlayerHUDInstance;
+	class UPlayerHUD* PlayerHUDInstance;
 
 	
 
