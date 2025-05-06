@@ -45,13 +45,13 @@ void ABaseAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	/*if (WeaponObject)
+	if (WeaponObject)
 	{
 		WeaponObject->Attack();
 	}
 	else
 	{
 		UE_LOG(Game, Error, TEXT("WeaponObject is nullptr in Attack"));
-	}*/
+	}
 }
 

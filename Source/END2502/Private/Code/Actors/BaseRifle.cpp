@@ -6,7 +6,6 @@
 #include "../END2502.h"
 #include "Code/Actors/BasePlayer.h"
 #include "Both/PlayerHUD.h"
-#include <Kismet/GameplayStatics.h>
 
 
 // Sets default values
@@ -89,7 +88,9 @@ void ABaseRifle::BeginPlay()
 
 	UE_LOG(Game, Error, TEXT("Velocity is %s"), *GetVelocity().ToString());
 
-	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	APlayerController* PC = GetWorld()->GetFirstPlayerController();
+	ACharacter* PlayerCharacter = PC ? Cast<ACharacter>(PC->GetPawn()) : nullptr;
+
 	if (PlayerCharacter)
 	{
 		UE_LOG(Game, Warning, TEXT("Player Character is %s"), *PlayerCharacter->GetName());

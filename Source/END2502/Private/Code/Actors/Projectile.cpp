@@ -2,12 +2,12 @@
 
 
 #include "Code/Actors/Projectile.h"
+#include "Engine/DamageEvents.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "../END2502.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "UObject/ConstructorHelpers.h"// For Poor Habit
-#include "Kismet/GameplayStatics.h" 
+
 // Sets default values
 AProjectile::AProjectile()
 {
@@ -107,7 +107,13 @@ void AProjectile::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 
 	if (OtherActor && OtherActor != this)
 	{
-		UGameplayStatics::ApplyDamage(OtherActor, Damage, OwnerController, this, UDamageType::StaticClass());
+		TSubclassOf<UDamageType> const ValidDamageTypeClass = UDamageType::StaticClass();
+		FDamageEvent DamageEvent(ValidDamageTypeClass);
+
+		if (Damage > 0.f)
+		{
+			OtherActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+		}
 	}
 
 	Destroy();
