@@ -21,10 +21,18 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBehaviorTree* BTAsset;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName PlayerKey;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
 	class UAIPerceptionComponent* AIPerceptionComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
 	class UAISenseConfig_Sight* SightConfig;
+
+private:
+	UFUNCTION()
+	void HandlePerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+
 
 };
