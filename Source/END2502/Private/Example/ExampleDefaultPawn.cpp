@@ -2,7 +2,11 @@
 
 
 #include "Example/ExampleDefaultPawn.h"
+/////////////ADDED////////////////
 #include "../END2502.h"
+#include "Example/ExampleActorWithInterfaces.h"
+#include "EngineUtils.h"
+//////////////////////////////////
 #include "GameFramework/PlayerInput.h"
 
 // Sets default values
@@ -16,6 +20,7 @@ AExampleDefaultPawn::AExampleDefaultPawn()
 // Called when the game starts or when spawned
 void AExampleDefaultPawn::BeginPlay()
 {
+	////////////////////////////////////END
 	Super::BeginPlay();
 	//Up Cast
 	AActor* Actor = this;
@@ -36,6 +41,28 @@ void AExampleDefaultPawn::BeginPlay()
 
 	UE_LOG(Game, Error, TEXT("Velocity is %s"), *GetVelocity().ToString());
 	UE_LOG(Game, Warning, TEXT("It is %s"), true? TEXT("TRUE") : TEXT("FALSE"));
+
+	//////////////////////////////////// GAR
+
+	for (TActorIterator<AExampleActorWithInterfaces> It(GetWorld()); It; ++It)
+	{
+		Actor = *It;
+		//Cannot cast with UInterfaces
+		UExampleInterface *U = Cast<UExampleInterface>(Actor);
+		if (U)
+		{
+			//U->TestFunction();//Nothing Showing Up
+			UE_LOG(Game, Log, TEXT("In the U cast"));
+		}
+		// This is the way to use an Unreal interface form C++
+		IExampleInterface* I = Cast<IExampleInterface>(Actor);
+		if (I)
+		{
+			I->TestFunction();
+			UE_LOG(Game, Log, TEXT("In the I cast"));
+			
+		}
+	}
 } 
 
 void AExampleDefaultPawn::Spawn()
