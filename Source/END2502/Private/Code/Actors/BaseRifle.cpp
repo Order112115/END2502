@@ -137,6 +137,7 @@ void ABaseRifle::Attack()
 void ABaseRifle::ActionStopped()
 {
 	ActionHappening = false;
+	OnActionStopped.Broadcast(Pawn);
 }
 
 void ABaseRifle::OwnerDied()

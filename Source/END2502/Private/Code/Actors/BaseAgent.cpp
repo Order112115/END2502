@@ -3,7 +3,11 @@
 
 #include "Code/Actors/BaseAgent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h" 
 #include "../END2502.h"
+#include "BrainComponent.h"
+
 
 ABaseAgent::ABaseAgent()
 {
@@ -12,10 +16,24 @@ ABaseAgent::ABaseAgent()
 
 }
 
+
+
 void ABaseAgent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	WeaponObject = Cast<ABaseRifle>(ChildActor->GetChildActor());
+	if (WeaponObject)
+	{
+		WeaponObject->OnActionStopped.AddDynamic(this, &ABaseAgent::HandleActionFinished);
+
+	}
+	else
+	{
+		UE_LOG(Game, Error, TEXT("WeaponObject is nullptr in BeginPlay"));
+	}
+
+	UpdateBlackboardHealth(1.0f);
 }
 
 void ABaseAgent::PostLoad()
@@ -45,6 +63,39 @@ void ABaseAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
+}
+
+void ABaseAgent::HandleHurt(float Ratio)
+{
+	UpdateBlackboardHealth(Ratio);
+}
+
+void ABaseAgent::HandleActionFinished(AActor* OtherActor)
+{
+	bool bSuccess = true;
+	FAIMessage::Send(this, FAIMessage(ActionFInishedMessage, this, bSuccess));
+}
+
+void ABaseAgent::UpdateBlackboardHealth(float Ratio)
+{
+	AAIController* AICon = Cast<AAIController>(GetController());
+	if (AICon)
+	{
+		UBlackboardComponent* BBComp = AICon->GetBlackboardComponent();
+		if (BBComp)
+		{
+			BBComp->SetValueAsFloat(HealthKey, Ratio);
+		}
+	}
+	else
+	{
+		UE_LOG(Game, Error, TEXT("AICon is nullptr in UpdateBLackboardHealth"));
+	}
+}
+
+void ABaseAgent::EnemyAttack()
+{
 	if (WeaponObject)
 	{
 		WeaponObject->Attack();

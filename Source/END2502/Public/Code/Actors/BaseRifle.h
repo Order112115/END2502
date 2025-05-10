@@ -23,6 +23,10 @@ public:
 
 	FDelegateType OnRifleAttack;
 
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
+
+	FDelegateType OnActionStopped;
+
 	UFUNCTION(BlueprintCallable)
 	FVector GetSource() const;
 

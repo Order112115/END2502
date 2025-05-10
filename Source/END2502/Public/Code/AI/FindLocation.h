@@ -14,6 +14,8 @@ class END2502_API UFindLocation : public UBTTaskNode
 	UFindLocation(); // Constructor declaration
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+protected:
 	UPROPERTY(EditAnywhere)
 	float SearchRadius;
 
