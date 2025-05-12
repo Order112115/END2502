@@ -51,6 +51,15 @@ protected:
 	UFUNCTION()
 	virtual void HandleDeathStart(float Ratio);
 
+	UFUNCTION()
+	void ActionStopped(AActor* OtherActor);
+
+	UFUNCTION()
+	void ReloadAmmo(AActor* OtherActor);
+
+	UFUNCTION()
+	void ReloadAnimation(AActor* OtherActor);
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

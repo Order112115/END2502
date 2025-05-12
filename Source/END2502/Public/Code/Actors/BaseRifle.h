@@ -7,6 +7,7 @@
 #include "BaseRifle.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegateType, AActor*, OtherActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDelegateAmmo, float, Current, float, Max);
 
 UCLASS()
 class END2502_API ABaseRifle : public AActor
@@ -19,13 +20,26 @@ public:
 
 	void Attack();
 
+	void RequestReload();
+
+	void UseAmmo();
+
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
 
 	FDelegateType OnRifleAttack;
 
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
+
+	FDelegateType OnReloadStart;
+
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
 
 	FDelegateType OnActionStopped;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
+
+	FDelegateAmmo OnAmmoChanged;
 
 	UFUNCTION(BlueprintCallable)
 	FVector GetSource() const;
@@ -35,6 +49,13 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void OwnerDied();
+
+	UFUNCTION(BlueprintCallable)
+	void ReloadAmmo();
+
+	UFUNCTION(BlueprintCallable)
+	void ActionStopped();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -49,14 +70,20 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 	FName MuzzleFlashSocketName;
 
-	UFUNCTION(BlueprintCallable)
-	void ActionStopped();
+	
 
 	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 
 	float ResetTimer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
+
+	float MaxAmmo;
+
+
+	
 private:
 	
 	UPROPERTY(EditAnywhere, Category = "Default")
@@ -72,6 +99,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Default")
 	bool Alive;
 
+	UPROPERTY(EditAnywhere, Category = "Default")
+
+	float CurrentAmmo;
+
+	
 
 public:	
 	// Called every frame

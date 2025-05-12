@@ -5,7 +5,8 @@
 #include "Utility/HealthComponent.h"
 #include "../END2502.h"
 #include <Code/Actors/BasePlayer.h>
-
+#include "Animation/AnimNotifies/AnimNotify.h"
+#include "Code/Actors/UAnimNotify_ReloadEnded.h"
 // Sets default values
 ABaseCharactor::ABaseCharactor()
 {
@@ -36,6 +37,7 @@ void ABaseCharactor::BeginPlay()
 	ChildActor->SetChildActorClass(PlayerWeaponClass);
 	WeaponObject = Cast<ABaseRifle>(ChildActor->GetChildActor());
 	AnimationBP = Cast<UCharacterAnimation>(GetMesh()->GetAnimInstance());
+	
 	if (!WeaponObject)
 	{
 		UE_LOG(Game, Error, TEXT("WeaponObject is nullptr after casting"));
@@ -57,7 +59,21 @@ void ABaseCharactor::BeginPlay()
 	{
 		UE_LOG(Game, Error, TEXT("HealthComponent is nullptr in ABaseCharactor::BeginPlay"));
 	}
+	if (AnimationBP) {
+		AnimationBP->OnReloadEnded.AddDynamic(this, &ABaseCharactor::ActionStopped);
+		AnimationBP->OnReloadNow.AddDynamic(this, &ABaseCharactor::ReloadAmmo);
+	}
+	else
+	{
+		UE_LOG(Game, Error, TEXT("AnimationBP is nullptr in ABaseCharactor::BeginPlay"));
+	}
+	if (WeaponObject) {
+		WeaponObject->OnReloadStart.AddDynamic(this, &ABaseCharactor::ReloadAnimation);
+	}
+
 }
+
+
 
 void ABaseCharactor::OnRifleAttackHandler(AActor* OtherActor)
 {
@@ -97,6 +113,43 @@ void ABaseCharactor::HandleDeathStart(float Ratio)
 		UE_LOG(Game, Error, TEXT("AnimationBP is nullptr in HandleDeathStart"));
 	}
 }
+
+void ABaseCharactor::ActionStopped(AActor* OtherActor)
+{
+	if (WeaponObject)
+	{
+		WeaponObject->ActionStopped();
+	}
+	else
+	{
+		UE_LOG(Game, Error, TEXT("WeaponObject is nullptr in ActionStopped"));
+	}
+}
+
+void ABaseCharactor::ReloadAmmo(AActor* OtherActor)
+{
+	if (WeaponObject)
+	{
+		WeaponObject->ReloadAmmo();
+	}
+	else
+	{
+		UE_LOG(Game, Error, TEXT("WeaponObject is nullptr in ReloadAmmo"));
+	}
+}
+
+void ABaseCharactor::ReloadAnimation(AActor* OtherActor)
+{
+	if (AnimationBP)
+	{
+		AnimationBP->ReloadAnimation();
+	}
+	else
+	{
+		UE_LOG(Game, Error, TEXT("AnimationBP is nullptr in ReloadAnimation"));
+	}
+}
+
 
 // Called every frame
 void ABaseCharactor::Tick(float DeltaTime)

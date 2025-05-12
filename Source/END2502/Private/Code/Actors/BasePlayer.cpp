@@ -34,7 +34,6 @@ void ABasePlayer::BeginPlay()
 	Super::BeginPlay();
 	AActor* Actor = GetController();
 	PlayerController = Cast<APlayerController>(Actor);
-
 	if (PlayerController)
 	{
 		UUserWidget* PlayerHUDWidget = CreateWidget<UUserWidget>(PlayerController, HUDClass);
@@ -44,8 +43,10 @@ void ABasePlayer::BeginPlay()
 			HUDObject = PlayerHUDWidget;
 
 			PlayerHUDInstance = Cast<UPlayerHUD>(PlayerHUDWidget);
-			
-		
+
+			WeaponObject->OnAmmoChanged.AddDynamic(PlayerHUDInstance, &UPlayerHUD::SetAmmo);
+
+			WeaponObject->ReloadAmmo();
 		}
 		else
 		{
@@ -129,6 +130,7 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAxis("MoveForward", this, &ABasePlayer::InputAxisMoveForward);
 	PlayerInputComponent->BindAxis("Strafe", this, &ABasePlayer::InputAxisStrafe);
 	PlayerInputComponent->BindAction("AttackInput", EInputEvent::IE_Pressed, this, &ABasePlayer::Attack);
+	PlayerInputComponent->BindAction("Reload", EInputEvent::IE_Pressed, this, &ABasePlayer::Reload);
 }
 
 void ABasePlayer::Attack()
@@ -142,14 +144,14 @@ void ABasePlayer::Attack()
 		UE_LOG(Game, Error, TEXT("WeaponObject is nullptr in Attack"));
 	}
 
-	/*if(AnimationBP)
+}
+
+void ABasePlayer::Reload()
+{
+	if (WeaponObject)
 	{
-		AnimationBP->FireAnimation();
+		WeaponObject->RequestReload();
 	}
-	else
-	{
-		UE_LOG(Game, Error, TEXT("AnimationBP is nullptr in Attack"));
-	}*/
 }
 
 void ABasePlayer::InputAxisMoveForward(float AxisValue)

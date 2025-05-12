@@ -2,11 +2,10 @@
 
 #include "AIController.h"
 #include "EngineUtils.h"
-#include "Code/AI/EnemyAttack.h"
 #include "Code/Actors/BaseAgent.h"
+#include "Code/AI/EnemyReload.h"
 
-
-EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UEnemyReload::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
     AAIController* AICon = OwnerComp.GetAIOwner();
     if (!AICon)
@@ -24,9 +23,9 @@ EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 
     if (I)
     {
-        I->EnemyAttack();
+        I->EnemyReload();
 
-      
+
     }
 
     if (MessageName != NAME_None)

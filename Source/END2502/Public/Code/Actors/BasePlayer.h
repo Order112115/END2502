@@ -52,6 +52,8 @@ protected:
 
 	void Attack();
 
+	void Reload();
+
 	
 private:
 	

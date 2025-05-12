@@ -41,6 +41,12 @@ protected:
 	
 	FName ColorName;
 
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* CurrentAmmo;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* MaxAmmo;
+
 	
 
 	
@@ -53,7 +59,9 @@ public:
 	FVector GetDestination() const;
 
 	void PerformLineTrace();
-	
+
+	UFUNCTION(BlueprintCallable)
+	void SetAmmo(float Current, float Max);
 
 	UFUNCTION(BlueprintCallable)
 	void SetHealth(float Percent);

@@ -3,6 +3,7 @@
 
 #include "Both/PlayerHUD.h"
 #include "Components/ProgressBar.h"
+#include "Components/TextBlock.h" 
 #include "Components/Image.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Blueprint/SlateBlueprintLibrary.h"
@@ -16,7 +17,23 @@ void UPlayerHUD::NativeConstruct()
 	ColorName = FName("Color");
 	SafeColor = FLinearColor(0.1f, .7f, .7f, 1.0f);
 	DangerColor = FLinearColor(.85f, 0.1f, 0.1f, 1.0f);
+
+
 	
+}
+
+
+void UPlayerHUD::SetAmmo(float Current, float Max)
+{
+	if (CurrentAmmo)
+	{
+		CurrentAmmo->SetText(FText::AsNumber(Current));
+	}
+
+	if (MaxAmmo)
+	{
+		MaxAmmo->SetText(FText::AsNumber(Max));
+	}
 }
 
 FVector UPlayerHUD::GetDestination() const

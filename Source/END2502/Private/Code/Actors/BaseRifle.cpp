@@ -109,6 +109,8 @@ void ABaseRifle::BeginPlay()
 	{
 		UE_LOG(Game, Error, TEXT("Player Character is nullptr"));
 	}
+
+	ReloadAmmo();
 }
 
 
@@ -129,8 +131,19 @@ void ABaseRifle::Attack()
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABaseRifle::ActionStopped, ResetTimer);
 
 		OnRifleAttack.Broadcast(Pawn);
+
+		UseAmmo();
 	}
 
+}
+
+void ABaseRifle::RequestReload()
+{
+	if (!ActionHappening)
+	{
+		ActionHappening = true;
+		OnReloadStart.Broadcast(Pawn);
+	}
 }
 
 
@@ -140,15 +153,28 @@ void ABaseRifle::ActionStopped()
 	OnActionStopped.Broadcast(Pawn);
 }
 
+void ABaseRifle::ReloadAmmo()
+{
+	CurrentAmmo = MaxAmmo;
+	OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo);
+}
+
 void ABaseRifle::OwnerDied()
 {
 	Alive = false;
 }
 
+void ABaseRifle::UseAmmo()
+{
+	CurrentAmmo = FMath::Max(CurrentAmmo - 1.0f, 0.0f);
+	OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo);
+	
+}
+
 bool ABaseRifle::CanShoot() const
 {
 	
-	return !ActionHappening && Alive;
+	return !ActionHappening && Alive && CurrentAmmo > 0;
 }
 
 // Called every frame

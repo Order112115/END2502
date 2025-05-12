@@ -3,6 +3,8 @@
 
 #include "Both/CharacterAnimation.h"
 #include "KismetAnimationLibrary.h"
+#include "Code/Actors/UAnimNotify_ReloadEnded.h"
+#include "Code/Actors/AnimNotify_ReloadNow.h"
 
 void UCharacterAnimation::NativeUpdateAnimation(float DeltaSeconds)
 {
@@ -39,6 +41,11 @@ void UCharacterAnimation::HitAnimation(float NotUsed)
 
 }
 
+void UCharacterAnimation::ReloadAnimation()
+{
+	PlaySlotAnimationAsDynamicMontage(ReloadAsset, ActionSlotName);
+}
+
 //void UCharacterAnimation::DeathAnimation()
 //{
 //	
@@ -68,4 +75,10 @@ void UCharacterAnimation::PreviewWindowUpdate_Implementation()
 			DeathAnimation();
 		}
 	}
+	if (DebugReload) {
+		DebugReload = false;
+		ReloadAnimation();
+	}
+
+
 }

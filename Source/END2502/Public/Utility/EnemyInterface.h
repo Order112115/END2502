@@ -24,4 +24,7 @@ class END2502_API IEnemyInterface
 public:
 	UFUNCTION()
 	virtual void EnemyAttack() = 0;
+
+	UFUNCTION()
+	virtual void EnemyReload() = 0;
 };

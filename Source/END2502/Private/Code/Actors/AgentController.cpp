@@ -20,6 +20,7 @@ AAgentController::AAgentController()
     SightConfig->DetectionByAffiliation.bDetectEnemies = false;
     SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
     SightConfig->DetectionByAffiliation.bDetectFriendlies = false;
+	SightConfig->AutoSuccessRangeFromLastSeenLocation = 300.0f;
 
     AIPerceptionComponent->ConfigureSense(*SightConfig);
     

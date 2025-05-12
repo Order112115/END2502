@@ -6,6 +6,9 @@
 #include "Animation/AnimInstance.h"
 #include "CharacterAnimation.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegateT, AActor*, OtherActor);
+
 /**
  * 
  */
@@ -23,9 +26,21 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void HitAnimation(float NotUsed);
 
+	UFUNCTION(BlueprintCallable)
+	void ReloadAnimation();
+
+
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void DeathAnimation();
 	virtual void DeathAnimation_Implementation();
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
+
+	FDelegateT OnReloadEnded;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
+
+	FDelegateT OnReloadNow;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default");
@@ -37,11 +52,19 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default")
 	bool DebugFire;
 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default")
+	bool DebugReload;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default");
 	FName ActionSlotName;
 
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default")
 	UAnimSequence* FireAsset;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default")
+	UAnimSequence* ReloadAsset;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default")
 	UAnimSequence* HitAsset;

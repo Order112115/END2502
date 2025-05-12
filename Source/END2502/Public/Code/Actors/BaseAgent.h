@@ -23,6 +23,7 @@ public:
 	// IEnemyInterface
 	//----------------------------------------------------------------------//
 	virtual void EnemyAttack() override;
+	virtual void EnemyReload() override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -46,10 +47,13 @@ protected:
 	UFUNCTION()
 	void UpdateBlackboardHealth(float Ratio);
 
-	
+	UFUNCTION()
+	void UpdateBlackboardAmmo(float Current, float Max);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 	FName ActionFInishedMessage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 	FName HealthKey;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
+	FName AmmoKey;
 };

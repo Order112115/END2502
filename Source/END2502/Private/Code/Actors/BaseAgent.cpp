@@ -34,6 +34,9 @@ void ABaseAgent::BeginPlay()
 	}
 
 	UpdateBlackboardHealth(1.0f);
+
+	WeaponObject->OnAmmoChanged.AddDynamic(this, &ABaseAgent::UpdateBlackboardAmmo);
+	WeaponObject->ReloadAmmo();
 }
 
 void ABaseAgent::PostLoad()
@@ -94,6 +97,23 @@ void ABaseAgent::UpdateBlackboardHealth(float Ratio)
 	}
 }
 
+void ABaseAgent::UpdateBlackboardAmmo(float Current, float Max)
+{
+	AAIController* AICon = Cast<AAIController>(GetController());
+	if (AICon)
+	{
+		UBlackboardComponent* BBComp = AICon->GetBlackboardComponent();
+		if (BBComp)
+		{
+			BBComp->SetValueAsFloat(AmmoKey, Current);
+		}
+	}
+	else
+	{
+		UE_LOG(Game, Error, TEXT("AICon is nullptr in UpdateBLackboardHealth"));
+	}
+}
+
 void ABaseAgent::EnemyAttack()
 {
 	if (WeaponObject)
@@ -103,6 +123,18 @@ void ABaseAgent::EnemyAttack()
 	else
 	{
 		UE_LOG(Game, Error, TEXT("WeaponObject is nullptr in Attack"));
+	}
+}
+
+void ABaseAgent::EnemyReload()
+{
+	if (WeaponObject)
+	{
+		WeaponObject->RequestReload();
+	}
+	else
+	{
+		UE_LOG(Game, Error, TEXT("WeaponObject is nullptr in Reload"));
 	}
 }
 
