@@ -6,6 +6,7 @@
 #include "../END2502.h"
 #include "Example/ExampleActorWithInterfaces.h"
 #include "EngineUtils.h"
+#include "Example/ExampleInterface2.h"
 //////////////////////////////////
 #include "GameFramework/PlayerInput.h"
 
@@ -61,6 +62,32 @@ void AExampleDefaultPawn::BeginPlay()
 			I->TestFunction();
 			UE_LOG(Game, Log, TEXT("In the I cast"));
 			
+		}
+
+		// GAR-Lecture 4 //
+		
+		//Cast Does not work with BlueprintImplementableEvent
+		IExampleInterface2* I2 = Cast<IExampleInterface2>(Actor);
+		if (I2)
+		{
+			I2->BlueprintImplementableEvent();
+			UE_LOG(Game, Log, TEXT("In the I2 cast"));
+
+		}
+		//This is how you use a BlueprintImplementableEvent (Using Implements and passing the U Class Interface)
+		if (Actor->Implements< UExampleInterface2>()) 
+		{
+			IExampleInterface2::Execute_BlueprintImplementableEvent(Actor);
+			UE_LOG(Game, Log, TEXT("In the I2 Implements"));
+		}
+
+		IExampleInterfaceThree* I3 = Cast<IExampleInterfaceThree>(Actor);
+		if (I3)
+		{
+			
+			IExampleInterfaceThree::Execute_BlueprintNativeEvent(Actor); // The same as I3->Execute_BlueprintNativeEvent(Actor);
+			UE_LOG(Game, Log, TEXT("In the Ie cast"));
+
 		}
 	}
 } 

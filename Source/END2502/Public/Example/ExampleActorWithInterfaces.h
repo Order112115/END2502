@@ -5,10 +5,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Example/ExampleInterface.h"
+#include "Example/ExampleInterfaceThree.h"
 #include "ExampleActorWithInterfaces.generated.h"
 
 UCLASS()
-class END2502_API AExampleActorWithInterfaces : public AActor, public IExampleInterface
+class END2502_API AExampleActorWithInterfaces : public AActor, 
+	public IExampleInterface, 
+	public IExampleInterfaceThree
 {
 	GENERATED_BODY()
 	
@@ -28,5 +31,9 @@ public:
 	// IExampleInterface
 	//----------------------------------------------------------------------//
 	virtual void TestFunction() override;
+	//----------------------------------------------------------------------//
+	// IExampleInterfaceThree
+	//----------------------------------------------------------------------//
+	virtual void BlueprintNativeEvent_Implementation() override;
 
 };

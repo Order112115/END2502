@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "ExampleInterface.generated.h"
+#include "ExampleInterfaceThree.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI, NotBlueprintable)
-class UExampleInterface : public UInterface
+UINTERFACE(MinimalAPI)
+class UExampleInterfaceThree : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,15 +16,14 @@ class UExampleInterface : public UInterface
 /**
  * 
  */
-class END2502_API IExampleInterface
+class END2502_API IExampleInterfaceThree
 {
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION()
-	virtual void TestFunction() = 0;
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void BlueprintNativeEvent();
+	virtual void BlueprintNativeEvent_Implementation();
 
-	UFUNCTION(BlueprintCallable)
-	virtual void BlueprintCallable();
 };

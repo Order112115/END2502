@@ -30,3 +30,9 @@ void AExampleActorWithInterfaces::TestFunction()
 	UE_LOG(Game, Log, TEXT("IN C++ AExampleActorWithInterfaces::TestFunction"));
 }
 
+void AExampleActorWithInterfaces::BlueprintNativeEvent_Implementation()
+{
+	IExampleInterfaceThree::BlueprintNativeEvent_Implementation(); // Call the parent implementation
+	UE_LOG(Game, Log, TEXT("IN C++ AExampleActorWithInterfaces::BlueprintNativeEvent_Implementation (Parent)"));
+}
+
