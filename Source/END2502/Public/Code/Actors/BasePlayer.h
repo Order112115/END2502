@@ -27,7 +27,7 @@ public:
 	UPROPERTY()
 	class UPlayerHUD* PlayerHUDInstance;
 
-	
+	virtual bool CanPickupHealth() const override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -35,6 +35,7 @@ protected:
 	virtual void HandleHurt(float Ratio) override;
 
 	virtual void HandleDeathStart(float Ratio) override;
+
 
 	class USpringArmComponent* SpringArm;
 	class UCameraComponent* Camera;
@@ -54,6 +55,7 @@ protected:
 
 	void Reload();
 
+	
 	
 private:
 	

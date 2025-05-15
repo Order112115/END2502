@@ -10,6 +10,7 @@
 #include "../END2502.h"
 #include "Blueprint/UserWidget.h"
 #include "Both/PlayerHUD.h"
+#include "Utility/HealthComponent.h"
 
 ABasePlayer::ABasePlayer()
 {
@@ -27,6 +28,11 @@ ABasePlayer::ABasePlayer()
 	
 	WeaponClass = ABasePlayer::StaticClass();
 	HUDClass = ABasePlayer::StaticClass();
+}
+
+bool ABasePlayer::CanPickupHealth() const
+{
+	return true;
 }
 
 void ABasePlayer::BeginPlay()
@@ -47,6 +53,8 @@ void ABasePlayer::BeginPlay()
 			WeaponObject->OnAmmoChanged.AddDynamic(PlayerHUDInstance, &UPlayerHUD::SetAmmo);
 
 			WeaponObject->ReloadAmmo();
+
+			HealthComponent->OnHeal.AddDynamic(PlayerHUDInstance, &UPlayerHUD::SetHealth);
 		}
 		else
 		{

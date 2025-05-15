@@ -45,5 +45,9 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
 
 	FDelegateTypeHealth OnDeath;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
+
+	FDelegateTypeHealth OnHeal;
 		
 };

@@ -5,19 +5,25 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include <Both/CharacterAnimation.h>
-
+#include "Utility/PickupInterface.h"
 #include "BaseRifle.h"
 #include "BaseCharactor.generated.h"
 
 
 UCLASS()
-class END2502_API ABaseCharactor : public ACharacter
+class END2502_API ABaseCharactor : public ACharacter, public IPickupInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	ABaseCharactor();
+
+
+	//----------------------------------------------------------------------//
+	// IPickupInterface
+	//----------------------------------------------------------------------//
+	virtual bool CanPickupHealth() const override;
 
 protected:
 	// Called when the game starts or when spawned

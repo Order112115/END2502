@@ -4,7 +4,6 @@
 #include "Code/Actors/AgentController.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
-#include "Perception/AISense_Sight.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 AAgentController::AAgentController()
@@ -23,8 +22,7 @@ AAgentController::AAgentController()
 	SightConfig->AutoSuccessRangeFromLastSeenLocation = 300.0f;
 
     AIPerceptionComponent->ConfigureSense(*SightConfig);
-    
-   /* AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAgentController::HandlePerceptionUpdated);*/
+    AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAgentController::HandlePerceptionUpdated);
 }
 
 void AAgentController::OnPossess(APawn* InPawn)

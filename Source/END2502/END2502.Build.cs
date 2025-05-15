@@ -10,7 +10,7 @@ public class END2502 : ModuleRules
 
         PublicDependencyModuleNames.AddRange(new string[] {
             "Core", "CoreUObject", "Engine", "InputCore",
-            "AnimGraphRuntime", "UMG", "AIModule", "GameplayTasks","NavigationSystem"
+            "AnimGraphRuntime", "UMG", "AIModule", "GameplayTasks","NavigationSystem","Cascade"
         });
 
         //PrivateDependencyModuleNames.AddRange(new string[] {  });

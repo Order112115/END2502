@@ -71,6 +71,7 @@ void ABaseAgent::Tick(float DeltaTime)
 
 void ABaseAgent::HandleHurt(float Ratio)
 {
+	Super::HandleHurt(Ratio);
 	UpdateBlackboardHealth(Ratio);
 }
 

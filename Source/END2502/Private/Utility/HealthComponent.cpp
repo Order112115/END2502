@@ -36,7 +36,6 @@ void UHealthComponent::BeginPlay()
 
 void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	if (Damage <= 0.0f) return;
 
 	
 	CurrentHealth -= Damage;
@@ -44,17 +43,23 @@ void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage, const UD
 	UE_LOG(LogTemp, Warning, TEXT("Actor %s took %f damage, current health: %f"), *DamagedActor->GetName(), Damage, CurrentHealth);
 
 	float HealthRatio = CurrentHealth / MaxHealth;
-
-	if (CurrentHealth > 0.0f)
+	if (Damage > 0.0f)
 	{
-		OnHurt.Broadcast(HealthRatio);
+		if (CurrentHealth > 0.0f)
+		{
+			OnHurt.Broadcast(HealthRatio);
+		}
+		else
+		{
+			AActor* Owner = GetOwner();
+
+			Owner->OnTakeAnyDamage.RemoveDynamic(this, &UHealthComponent::HandleDamage);
+			OnDeath.Broadcast(0.0f);
+		}
 	}
 	else
 	{
-		AActor* Owner = GetOwner();
-
-		Owner->OnTakeAnyDamage.RemoveDynamic(this, &UHealthComponent::HandleDamage);
-		OnDeath.Broadcast(0.0f);
+		OnHeal.Broadcast(HealthRatio);
 	}
 }
 

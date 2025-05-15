@@ -26,13 +26,13 @@ EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
     {
         I->EnemyAttack();
 
-      
+        if (MessageName != NAME_None)
+        {
+            OwnerComp.RegisterMessageObserver(this, MessageName);
+        }
+
+        return EBTNodeResult::InProgress;
     }
 
-    if (MessageName != NAME_None)
-    {
-        OwnerComp.RegisterMessageObserver(this, MessageName);
-    }
-
-    return EBTNodeResult::InProgress;
+    return EBTNodeResult::Failed;
 }
