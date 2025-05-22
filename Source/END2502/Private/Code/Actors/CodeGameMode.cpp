@@ -8,7 +8,9 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Engine/Engine.h"
+#include "Code/Actors/Spawner.h"
 #include "../END2502.h"
+
 
 void ACodeGameMode::RemoveEnemy(AActor* DestroyedActor)
 {
@@ -102,6 +104,16 @@ void ACodeGameMode::BeginPlay()
         else
         {
             AddEnemy(BaseChar);
+        }
+    }
+
+    // Add all MassSpawners as enemies
+    for (TActorIterator<ASpawner> It(World); It; ++It)
+    {
+        ASpawner* Spawner = *It;
+        if (Spawner)
+        {
+            AddEnemy(Spawner);
         }
     }
 
