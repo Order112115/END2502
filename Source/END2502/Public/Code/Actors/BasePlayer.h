@@ -7,9 +7,7 @@
 #include "Both/CharacterAnimation.h"
 #include "BasePlayer.generated.h"
 
-
-
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegatePlayer);
 /**
  * 
  */
@@ -28,6 +26,17 @@ public:
 	class UPlayerHUD* PlayerHUDInstance;
 
 	virtual bool CanPickupHealth() const override;
+	virtual bool CanPickupAmmo() const override;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
+
+	FDelegatePlayer OnPlayerLost;
+
+	UFUNCTION()
+	void PlayerLost();
+
+	UFUNCTION()
+	void PlayerWin();
 
 protected:
 	virtual void BeginPlay() override;
@@ -51,12 +60,14 @@ protected:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION()
 	void Attack();
 
+	UFUNCTION()
 	void Reload();
 
 	
-	
+
 private:
 	
 	void InputAxisMoveForward(float AxisValue);

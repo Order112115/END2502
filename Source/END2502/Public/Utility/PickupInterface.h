@@ -24,4 +24,5 @@ class END2502_API IPickupInterface
 public:
 
 	virtual bool CanPickupHealth() const = 0;
+	virtual bool CanPickupAmmo() const = 0;
 };

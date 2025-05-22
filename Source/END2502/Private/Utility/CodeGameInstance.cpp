@@ -16,10 +16,22 @@ void UCodeGameInstance::QuitTheGame()
 	UKismetSystemLibrary::QuitGame(this, nullptr, EQuitPreference::Quit, false);
 }
 
+void UCodeGameInstance::LoadCurrentLevel()
+{
+	LoadLevelSafe(CurrentLevelIndex);
+}
+
+void UCodeGameInstance::LoadMainMenu()
+{
+	LoadLevelSafe(0);
+}
+
 void UCodeGameInstance::LoadLevelSafe(int32 LevelIndex)
 {
     if (GameLevel.IsValidIndex(LevelIndex))
     {
+		CurrentLevelIndex = LevelIndex;
+
         UWorld* World = GEngine->GetWorldFromContextObject(this, EGetWorldErrorMode::LogAndReturnNull);
         if (World == nullptr)
         {

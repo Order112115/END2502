@@ -35,6 +35,11 @@ bool ABasePlayer::CanPickupHealth() const
 	return true;
 }
 
+bool ABasePlayer::CanPickupAmmo() const
+{
+	return true;
+}
+
 void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
@@ -55,6 +60,8 @@ void ABasePlayer::BeginPlay()
 			WeaponObject->ReloadAmmo();
 
 			HealthComponent->OnHeal.AddDynamic(PlayerHUDInstance, &UPlayerHUD::SetHealth);
+
+			AnimationBP->OnDeathEnded.AddDynamic(this, &ABasePlayer::PlayerLost);
 		}
 		else
 		{
@@ -160,6 +167,20 @@ void ABasePlayer::Reload()
 	{
 		WeaponObject->RequestReload();
 	}
+}
+
+void ABasePlayer::PlayerLost()
+{
+	OnPlayerLost.Broadcast();
+	HUDObject->RemoveFromParent();
+	PlayerController->bShowMouseCursor = true;
+}
+
+void ABasePlayer::PlayerWin()
+{
+	DisableInput(PlayerController);
+	HUDObject->RemoveFromParent();
+
 }
 
 void ABasePlayer::InputAxisMoveForward(float AxisValue)

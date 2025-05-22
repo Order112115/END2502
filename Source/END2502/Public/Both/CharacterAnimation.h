@@ -8,7 +8,7 @@
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegateT, AActor*, OtherActor);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDelegateDeath);
 /**
  * 
  */
@@ -30,6 +30,9 @@ public:
 	void ReloadAnimation();
 
 
+	UFUNCTION(BlueprintCallable)
+	void DeathEnded();
+
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void DeathAnimation();
 	virtual void DeathAnimation_Implementation();
@@ -41,6 +44,10 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
 
 	FDelegateT OnReloadNow;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Delegate)
+
+	FDelegateDeath OnDeathEnded;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Default");
@@ -59,6 +66,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default");
 	FName ActionSlotName;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default");
+	FTimerHandle DeathHandle;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default")
 	UAnimSequence* FireAsset;

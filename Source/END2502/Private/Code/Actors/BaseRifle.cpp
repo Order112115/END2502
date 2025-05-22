@@ -28,6 +28,11 @@ FVector ABaseRifle::GetSource() const
 	return SkeletalMesh->GetSocketLocation("MuzzleFlashSocket");
 }
 
+float ABaseRifle::GetCurrentAmmo() const
+{
+	return CurrentAmmo;
+}
+
 FRotator ABaseRifle::GetBaseAimRotation() const
 {
 

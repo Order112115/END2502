@@ -46,18 +46,25 @@ void UCharacterAnimation::ReloadAnimation()
 	PlaySlotAnimationAsDynamicMontage(ReloadAsset, ActionSlotName);
 }
 
-//void UCharacterAnimation::DeathAnimation()
-//{
-//	
-//}
-//
+void UCharacterAnimation::DeathEnded()
+{
+
+	OnDeathEnded.Broadcast();
+}
+
+
 void UCharacterAnimation::DeathAnimation_Implementation()
 {
+	
 	if (DeathAsset.Num() > 0)
 	{
 		int32 RandomIndex = FMath::RandRange(0, DeathAsset.Num() - 1);
 		CurrentDeathAsset = DeathAsset[RandomIndex];
 	}
+
+	float time = CurrentDeathAsset->GetPlayLength();
+	GetWorld()->GetTimerManager().SetTimer(DeathHandle, this, &UCharacterAnimation::DeathEnded, time, false);
+
 }
 
 void UCharacterAnimation::PreviewWindowUpdate_Implementation()

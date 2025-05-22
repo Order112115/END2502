@@ -37,6 +37,8 @@ void ABaseAgent::BeginPlay()
 
 	WeaponObject->OnAmmoChanged.AddDynamic(this, &ABaseAgent::UpdateBlackboardAmmo);
 	WeaponObject->ReloadAmmo();
+
+	AnimationBP->OnDeathEnded.AddDynamic(this, &ABaseAgent::K2_DestroyActor);
 }
 
 void ABaseAgent::PostLoad()

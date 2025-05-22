@@ -45,6 +45,9 @@ public:
 	FVector GetSource() const;
 
 	UFUNCTION(BlueprintCallable)
+	float GetCurrentAmmo() const;
+
+	UFUNCTION(BlueprintCallable)
 	FRotator GetBaseAimRotation() const;
 
 	UFUNCTION(BlueprintCallable)
@@ -78,10 +81,6 @@ protected:
 
 	float ResetTimer;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
-
-	float MaxAmmo;
-
 
 	
 private:
@@ -112,5 +111,7 @@ public:
 	UPROPERTY()
 	class ABasePlayer* BasePlayer;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 
+	float MaxAmmo;
 };

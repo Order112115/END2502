@@ -35,6 +35,11 @@ bool ABaseCharactor::CanPickupHealth() const
 	return false;
 }
 
+bool ABaseCharactor::CanPickupAmmo() const
+{
+	return false;
+}
+
 // Called when the game starts or when spawned
 void ABaseCharactor::BeginPlay()
 {

@@ -24,6 +24,10 @@ public:
 	// IPickupInterface
 	//----------------------------------------------------------------------//
 	virtual bool CanPickupHealth() const override;
+	virtual bool CanPickupAmmo() const override;
+
+	UFUNCTION()
+	class ABaseRifle* GetWeaponObject() const { return WeaponObject; }
 
 protected:
 	// Called when the game starts or when spawned

@@ -28,6 +28,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default")
 	int32 FirstLevelIndex = 1;
 
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Default")
+	int32 CurrentLevelIndex = 1;
 	
 public:
 	UFUNCTION()
@@ -35,4 +38,12 @@ public:
 
 	UFUNCTION()
 	void QuitTheGame();
+
+	UFUNCTION()
+	void LoadCurrentLevel();
+
+	UFUNCTION()
+	void LoadMainMenu();
+
+
 };
