@@ -5,7 +5,6 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "../END2502.h"
 #include "Code/Actors/BasePlayer.h"
-#include "Both/PlayerHUD.h"
 
 
 // Sets default values

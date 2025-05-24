@@ -23,3 +23,4 @@ public:
 #endif
 	// End UAnimNotify interface
 };
+ 
